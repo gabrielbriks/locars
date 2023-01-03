@@ -1,15 +1,12 @@
 import express from 'express';
-import { createCourse } from './routes';
-import { categoriesRoutes } from './routes/categories.routes';
-import { specificationsRoutes } from './routes/specifications.router';
+import { router } from './routes';
 
 const app = express();
+
 app.use(express.json());
 
+app.use(router);
 
-app.get('/', createCourse);
 
-app.use('/categories',categoriesRoutes);
-app.use('/specifications',specificationsRoutes);
 
 app.listen(3333);
