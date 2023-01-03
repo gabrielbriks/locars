@@ -1,6 +1,6 @@
-import { SpecificationsRepository } from "../repositories/SpecificationsRepository";
+import { SpecificationsRepository } from "../../repositories/implementations/SpecificationsRepository";
 
-export class CreateSpecificationService {
+export class CreateSpecificationUseCase {
   constructor(private specificationRepository: SpecificationsRepository){}
 
   execute({name, description}) {
