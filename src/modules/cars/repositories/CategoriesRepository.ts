@@ -6,10 +6,21 @@ import { ICategoriesRepository, ICreateCategoryDTO } from "./ICategoriesReposito
 export class CategoriesRepository implements ICategoriesRepository {
   private categories: Category[];
 
-
-  constructor(){
+  private static INSTANCE: CategoriesRepository;
+  
+  private constructor(){
     this.categories = [];
+  }
+
+  /** IMPLEMENTAÇÃO DE SINGLETON
+   * Retorna uma nova instância somente quando ela não tiver sido criada
+   */
+  public static getInstance(): CategoriesRepository {
+    if (!CategoriesRepository.INSTANCE) {
+      CategoriesRepository.INSTANCE = new CategoriesRepository();
+    }
     
+    return CategoriesRepository.INSTANCE
   }
 
   create({name, description}: ICreateCategoryDTO): void {
