@@ -1,17 +1,35 @@
 import { Router } from 'express';
-import { randomUUID } from 'node:crypto';
-const categoriesRoutes = Router();
+import { CategoryRepository } from '../repositories/CategoryRepository';
 
-const categories = []
+
+const categoriesRoutes = Router();
+const categoryRepository = new CategoryRepository;
+
 
 categoriesRoutes.post('/', async (req, res) => {
   const  { name, description  } = req.body;
-  const id = randomUUID()
 
-  await categories.push({id, name, description });
+  const categoryAlreadyExists = categoryRepository.findByName(name);
+  
+  if (categoryAlreadyExists) {
+    return res.status(400).json({error: 'Category already exists.'})
+  }
+  
+  categoryRepository.create({name,description});
 
-  return res.status(201).json(categories)
+  return res.status(201).send();
+});
+
+categoriesRoutes.get('/', async (req, res) => {
+
+  const all = await categoryRepository.list();
+
+  return res.json(all);
 })
 
-  export { categoriesRoutes };
+
+
+
+
+export { categoriesRoutes };
 
